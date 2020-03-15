@@ -122,3 +122,10 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
+/.idea/
+/target/
+/spring-boot-com-TDD.iml
+/.mvn/
+/mvnw
+/mvnw.cmd
+/HELP.md
