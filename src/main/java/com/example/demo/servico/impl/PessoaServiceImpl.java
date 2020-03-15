@@ -14,7 +14,7 @@ public class PessoaServiceImpl implements PessoaService {
     }
 
     @Override
-    public void salvar(Pessoa pessoa) {
-
+    public Pessoa salvar(Pessoa pessoa) {
+        return pessoaRepository.save(pessoa);
     }
 }
