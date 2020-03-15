@@ -1,6 +1,7 @@
 package com.example.demo.servico.impl;
 
 import com.example.demo.modelo.Pessoa;
+import com.example.demo.modelo.Telefone;
 import com.example.demo.repository.PessoaRepository;
 import com.example.demo.servico.PessoaService;
 import com.example.demo.servico.exception.UnicidadeCpfException;
@@ -34,5 +35,10 @@ public class PessoaServiceImpl implements PessoaService {
         }
 
         return pessoaRepository.save(pessoa);
+    }
+
+    @Override
+    public Pessoa buscarPorTelefone(Telefone telefone) {
+        return pessoaRepository.findByTelefoneDddAndTelefoneNumero(telefone.getDdd(), telefone.getNumero()).get();
     }
 }

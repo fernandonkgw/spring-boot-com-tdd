@@ -6,6 +6,8 @@ import com.example.demo.repository.PessoaRepository;
 import com.example.demo.servico.exception.UnicidadeCpfException;
 import com.example.demo.servico.exception.UnicidadeTelefoneException;
 import com.example.demo.servico.impl.PessoaServiceImpl;
+import org.assertj.core.api.Assertions;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.Arrays;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -68,5 +71,18 @@ public class PessoaServiceTest {
         when(pessoaRepository.findByTelefoneDddAndTelefoneNumero(DDD, NUMERO)).thenReturn(Optional.of(pessoa));
 
         sut.salvar(pessoa);
+    }
+
+    @Test
+    public void deve_procurar_pessoa_pelo_ddd_e_numero_do_telefone() {
+        when(pessoaRepository.findByTelefoneDddAndTelefoneNumero(DDD, NUMERO)).thenReturn(Optional.of(pessoa));
+
+        Pessoa pessoaTeste = sut.buscarPorTelefone(telefone);
+
+        verify(pessoaRepository).findByTelefoneDddAndTelefoneNumero(DDD, NUMERO);
+
+        assertThat(pessoaTeste).isNotNull();
+        assertThat(pessoaTeste.getNome()).isEqualTo(NOME);
+        assertThat(pessoaTeste.getCpf()).isEqualTo(CPF);
     }
 }
