@@ -2,6 +2,7 @@ package com.example.demo.servico;
 
 import com.example.demo.modelo.Pessoa;
 import com.example.demo.repository.PessoaRepository;
+import com.example.demo.servico.exception.UnicidadeCpfException;
 import com.example.demo.servico.impl.PessoaServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,7 +10,10 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Optional;
+
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 public class PessoaServiceTest {
@@ -34,5 +38,12 @@ public class PessoaServiceTest {
         sut.salvar(pessoa);
 
         verify(pessoaRepository).save(pessoa);
+    }
+
+    @Test(expected = UnicidadeCpfException.class)
+    public void nao_deve_salvar_duas_pessoas_com_o_mesmo_cpf() {
+        when(pessoaRepository.findByCpf(CPF)).thenReturn(Optional.of(pessoa));
+
+        sut.salvar(pessoa);
     }
 }
