@@ -31,6 +31,9 @@ public class PessoaServiceTest {
         pessoa = new Pessoa();
         pessoa.setNome(NOME);
         pessoa.setCpf(CPF);
+
+//        Nó vídeo orienta colocar o when mas nos testes não houve necessidade
+//        when(pessoaRepository.findByCpf(CPF)).thenReturn(Optional.empty());
     }
 
     @Test
@@ -41,9 +44,11 @@ public class PessoaServiceTest {
     }
 
     @Test(expected = UnicidadeCpfException.class)
-    public void nao_deve_salvar_duas_pessoas_com_o_mesmo_cpf() {
+    public void nao_deve_salvar_duas_pessoas_com_o_mesmo_cpf() throws UnicidadeCpfException {
         when(pessoaRepository.findByCpf(CPF)).thenReturn(Optional.of(pessoa));
 
         sut.salvar(pessoa);
     }
+
+
 }

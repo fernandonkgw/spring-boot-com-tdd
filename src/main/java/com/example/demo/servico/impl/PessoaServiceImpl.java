@@ -3,6 +3,9 @@ package com.example.demo.servico.impl;
 import com.example.demo.modelo.Pessoa;
 import com.example.demo.repository.PessoaRepository;
 import com.example.demo.servico.PessoaService;
+import com.example.demo.servico.exception.UnicidadeCpfException;
+
+import java.util.Optional;
 
 public class PessoaServiceImpl implements PessoaService {
 
@@ -14,7 +17,13 @@ public class PessoaServiceImpl implements PessoaService {
     }
 
     @Override
-    public Pessoa salvar(Pessoa pessoa) {
+    public Pessoa salvar(Pessoa pessoa) throws UnicidadeCpfException {
+        Optional<Pessoa> optional = pessoaRepository.findByCpf(pessoa.getCpf());
+
+        if (optional.isPresent()) {
+            throw new UnicidadeCpfException();
+        }
+
         return pessoaRepository.save(pessoa);
     }
 }
