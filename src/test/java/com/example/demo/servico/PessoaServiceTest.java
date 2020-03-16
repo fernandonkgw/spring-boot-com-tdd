@@ -3,6 +3,7 @@ package com.example.demo.servico;
 import com.example.demo.modelo.Pessoa;
 import com.example.demo.modelo.Telefone;
 import com.example.demo.repository.PessoaRepository;
+import com.example.demo.servico.exception.TelefoneNaoEncontradoException;
 import com.example.demo.servico.exception.UnicidadeCpfException;
 import com.example.demo.servico.exception.UnicidadeTelefoneException;
 import com.example.demo.servico.impl.PessoaServiceImpl;
@@ -73,8 +74,13 @@ public class PessoaServiceTest {
         sut.salvar(pessoa);
     }
 
+    @Test(expected = TelefoneNaoEncontradoException.class)
+    public void deve_retornar_excecao_de_nao_encontrado_quando_nao_existir_pessoa_com_o_ddd_e_numero_de_telefone() throws Exception {
+        sut.buscarPorTelefone(telefone);
+    }
+
     @Test
-    public void deve_procurar_pessoa_pelo_ddd_e_numero_do_telefone() {
+    public void deve_procurar_pessoa_pelo_ddd_e_numero_do_telefone() throws Exception {
         when(pessoaRepository.findByTelefoneDddAndTelefoneNumero(DDD, NUMERO)).thenReturn(Optional.of(pessoa));
 
         Pessoa pessoaTeste = sut.buscarPorTelefone(telefone);

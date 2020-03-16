@@ -4,6 +4,7 @@ import com.example.demo.modelo.Pessoa;
 import com.example.demo.modelo.Telefone;
 import com.example.demo.repository.PessoaRepository;
 import com.example.demo.servico.PessoaService;
+import com.example.demo.servico.exception.TelefoneNaoEncontradoException;
 import com.example.demo.servico.exception.UnicidadeCpfException;
 import com.example.demo.servico.exception.UnicidadeTelefoneException;
 
@@ -38,7 +39,8 @@ public class PessoaServiceImpl implements PessoaService {
     }
 
     @Override
-    public Pessoa buscarPorTelefone(Telefone telefone) {
-        return pessoaRepository.findByTelefoneDddAndTelefoneNumero(telefone.getDdd(), telefone.getNumero()).get();
+    public Pessoa buscarPorTelefone(Telefone telefone) throws TelefoneNaoEncontradoException {
+        final Optional<Pessoa> optional = pessoaRepository.findByTelefoneDddAndTelefoneNumero(telefone.getDdd(), telefone.getNumero());
+        return optional.orElseThrow(() -> new TelefoneNaoEncontradoException());
     }
 }
