@@ -46,9 +46,8 @@ public class PessoaServiceTest {
 
         pessoa.setTelefones(Arrays.asList(telefone));
 
-//        Nó vídeo orienta colocar o when mas nos testes não houve necessidade
-//        when(pessoaRepository.findByCpf(CPF)).thenReturn(Optional.empty());
-
+        when(pessoaRepository.findByCpf(CPF)).thenReturn(Optional.empty());
+        when(pessoaRepository.findByTelefoneDddAndTelefoneNumero(DDD, NUMERO)).thenReturn(Optional.empty());
     }
 
     @Test
