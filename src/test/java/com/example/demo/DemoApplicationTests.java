@@ -1,6 +1,8 @@
 package com.example.demo;
 
 
+import io.restassured.RestAssured;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,14 +16,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource("classpath:application-test.properties")
-public class DemoApplicationTests {
+public abstract class DemoApplicationTests {
 
 	@Value("${local.server.port}")
 	protected int porta;
 
-	@Test
-	public void contextLoads() {
-		System.out.println(porta);
+	@Before
+	public void setUp() throws Exception {
+		RestAssured.port = porta;
 	}
-
 }
