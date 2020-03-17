@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import com.example.demo.modelo.Pessoa;
+import com.example.demo.repository.filtro.PessoaFiltro;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -58,5 +60,56 @@ public class PessoaRepositoryTest {
         final Optional<Pessoa> optional = sut.findByTelefoneDddAndTelefoneNumero("23", "3454354353");
 
         assertThat(optional.isPresent()).isFalse();
+    }
+
+    @Test
+    public void deve_filtrar_pessoas_por_parte_do_nome() {
+        final PessoaFiltro filtro = new PessoaFiltro();
+        filtro.setNome("a");
+
+        List<Pessoa> pessoas = sut.filtrar(filtro);
+
+        assertThat(pessoas.size()).isEqualTo(3);
+    }
+
+    @Test
+    public void deve_filtrar_pessoas_por_parte_cpf() {
+        final PessoaFiltro filtro = new PessoaFiltro();
+        filtro.setCpf("78");
+
+        List<Pessoa> pessoas = sut.filtrar(filtro);
+
+        assertThat(pessoas.size()).isEqualTo(3);
+    }
+
+    @Test
+    public void deve_filtrar_pessoas_por_filtro_composto() {
+        final PessoaFiltro filtro = new PessoaFiltro();
+        filtro.setNome("a");
+        filtro.setCpf("78");
+
+        final List<Pessoa> pessoas = sut.filtrar(filtro);
+
+        assertThat(pessoas.size()).isEqualTo(2);
+    }
+
+    @Test
+    public void deve_filtrar_pessoas_pelo_ddd_do_telefone() {
+        final PessoaFiltro filtro = new PessoaFiltro();
+        filtro.setDdd("21");
+
+        final List<Pessoa> pessoas = sut.filtrar(filtro);
+
+        assertThat(pessoas.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void deve_filtrar_pessoas_pelo_numero_do_telefone() {
+        final PessoaFiltro filtro = new PessoaFiltro();
+        filtro.setTelefone("21321312");
+
+        final List<Pessoa> pessoas = sut.filtrar(filtro);
+
+        assertThat(pessoas.size()).isEqualTo(0);
     }
 }
