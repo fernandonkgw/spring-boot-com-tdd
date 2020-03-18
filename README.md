@@ -1,5 +1,5 @@
 # spring-boot-com-tdd
-Curso de spring boot do canal bruno tech
+Curso de spring boot do [canal bruno tech](https://www.youtube.com/playlist?list=PLNFATaehwnTVCgCum7i3MeQsjMryKXtkf)
 
 ##### Java 11
 ##### Spring Boot 1.5.22
