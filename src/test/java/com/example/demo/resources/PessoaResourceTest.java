@@ -9,7 +9,6 @@ import io.restassured.http.ContentType;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import static io.restassured.RestAssured.given;
@@ -47,23 +46,19 @@ public class PessoaResourceTest extends DemoApplicationTests {
 
     @Test
     public void deve_salvar_nova_pessoa_no_sistema() {
-        final Pessoa pessoa = new Pessoa();
-        pessoa.setNome("Ricardo Enrico Emanuel Nunes");
-        pessoa.setCpf("02506673806");
-
-        final Telefone telefone = new Telefone();
-        telefone.setDdd("11");
-        telefone.setNumero("26375115");
-
+        final Pessoa pessoa = Pessoa.builder()
+                .nome("Ricardo Enrico Emanuel Nunes")
+                .cpf("02506673806").build();
+        final Telefone telefone = Telefone.builder()
+                .ddd("11")
+                .numero("26375115").build();
         pessoa.setTelefones(Arrays.asList(telefone));
 
-        final Endereco endereco = new Endereco();
-        endereco.setLogradouro("Rua Cento e Vinte e Três");
-        endereco.setNumero(538);
-        endereco.setBairro("Cidade Miguel Badra");
-        endereco.setCidade("Suzano");
-        endereco.setEstado("SP");
-
+        final Endereco endereco = Endereco.builder()
+                .logradouro("Rua Cento e Vinte e Três")
+                .numero(538)
+                .bairro("Cidade Miguel Badra")
+                .cidade("Suzano").estado("SP").build();
         pessoa.setEnderecos(Arrays.asList(endereco));
 
         given()
@@ -87,14 +82,12 @@ public class PessoaResourceTest extends DemoApplicationTests {
 
     @Test
     public void nao_deve_salvar_duas_pessoas_com_o_mesmo_cpf() {
-        final Pessoa pessoa = new Pessoa();
-        pessoa.setNome("Ricardo Enrico Emanuel Nunes");
-        pessoa.setCpf("72788740417");
-
-        final Telefone telefone = new Telefone();
-        telefone.setDdd("11");
-        telefone.setNumero("26375115");
-
+        final Pessoa pessoa = Pessoa.builder()
+                .nome("Ricardo Enrico Emanuel Nunes")
+                .cpf("72788740417").build();
+        final Telefone telefone = Telefone.builder()
+                .ddd("11")
+                .numero("26375115").build();
         pessoa.setTelefones(Arrays.asList(telefone));
 
         given()
@@ -130,7 +123,5 @@ public class PessoaResourceTest extends DemoApplicationTests {
                     .body("codigo", containsInAnyOrder(1,3,5),
                             "nome", containsInAnyOrder("Thiago", "Iago", "Cauê"),
                             "cpf", containsInAnyOrder("86730543540","72788740417","38767897100"));
-
-
     }
 }

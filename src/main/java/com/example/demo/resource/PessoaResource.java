@@ -29,9 +29,10 @@ public class PessoaResource {
     @GetMapping("/{ddd}/{numero}")
     public ResponseEntity<Pessoa> buscarPorDddTelefoneDoTelefone(@PathVariable("ddd") String ddd,
                                                                  @PathVariable("numero") String numero) throws TelefoneNaoEncontradoException {
-        final Telefone telefone = new Telefone();
-        telefone.setDdd(ddd);
-        telefone.setNumero(numero);
+        final Telefone telefone = Telefone.builder()
+                .ddd(ddd)
+                .numero(numero)
+                .build();
 
         final Pessoa pessoa = pessoaService.buscarPorTelefone(telefone);
 

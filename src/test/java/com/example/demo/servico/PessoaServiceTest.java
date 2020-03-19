@@ -4,7 +4,6 @@ import com.example.demo.modelo.Pessoa;
 import com.example.demo.modelo.Telefone;
 import com.example.demo.repository.PessoaRepository;
 import com.example.demo.servico.exception.TelefoneNaoEncontradoException;
-import com.example.demo.servico.exception.UnicidadeCpfException;
 import com.example.demo.servico.exception.UnicidadeTelefoneException;
 import com.example.demo.servico.impl.PessoaServiceImpl;
 import org.junit.Before;
@@ -42,13 +41,12 @@ public class PessoaServiceTest {
     @Before
     public void setUp() {
         sut = new PessoaServiceImpl(pessoaRepository);
-        pessoa = new Pessoa();
-        pessoa.setNome(NOME);
-        pessoa.setCpf(CPF);
-
-        telefone = new Telefone();
-        telefone.setDdd(DDD);
-        telefone.setNumero(NUMERO);
+        pessoa = Pessoa.builder()
+                .nome(NOME)
+                .cpf(CPF).build();
+        telefone = Telefone.builder()
+                .ddd(DDD)
+                .numero(NUMERO).build();
 
         pessoa.setTelefones(Arrays.asList(telefone));
 

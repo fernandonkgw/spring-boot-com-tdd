@@ -6,6 +6,7 @@ Curso de spring boot do [canal bruno tech](https://www.youtube.com/playlist?list
 ##### JUnit4
 ##### Flyway
 ##### Rest Assured
+##### Lombok
 
 Exemplos de testes unitários e integração
 
